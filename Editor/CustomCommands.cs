@@ -1,3 +1,6 @@
+
+namespace StardropTools.CustomCommands
+{
 #if UNITY_EDITOR
 
     using System;
@@ -465,7 +468,7 @@
     // taken from https://forum.unity.com/threads/shortcut-key-for-lock-inspector.95815/
     public class InspectorLockToggle
     {
-        [MenuItem("Custom Commands/Toggle Lock #w")]
+        [MenuItem("Custom Commands/Toggle Lock #w")] // shift + w
         static void ToggleInspectorLock() // Inspector must be inspecting something to be locked
         {
             EditorWindow inspectorToBeLocked = EditorWindow.mouseOverWindow; // "EditorWindow.focusedWindow" can be used instead
@@ -482,3 +485,5 @@
             }
         }
     }
+#endif
+}
