@@ -1,4 +1,5 @@
 
+
 namespace StardropTools.CustomCommands
 {
 #if UNITY_EDITOR
@@ -120,10 +121,13 @@ namespace StardropTools.CustomCommands
         }
 
 
+        // % = control
+        // # = shift
+        // & = alt
         // Reset Position
         // =============================================== Reset Position
-        [MenuItem("Custom Commands/Reset Position _s")]
-        static void ResetPosition()
+        [MenuItem("Custom Commands/Reset Pos &s")]
+        static void ResetPos()
         {
             if (Selection.activeTransform != null && _cmdsActive)
             {
@@ -132,12 +136,14 @@ namespace StardropTools.CustomCommands
 
                 foreach (GameObject go in objs)
                 {
+                    // reset RectsTransform
                     if (go.GetComponent<RectTransform>() == true)
                     {
                         Undo.RecordObject(go.transform, "Reset object position");
                         go.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                     }
 
+                    // reset Transform
                     else
                     {
                         Undo.RecordObject(go.transform, "Reset object position");
@@ -147,10 +153,14 @@ namespace StardropTools.CustomCommands
             }
         }
 
-        // Reset Local Position
-        // =============================================== Reset Local Position
-        [MenuItem("Custom Commands/Reset Local Position _#s")]
-        static void ResetLocalPosition()
+
+        // % = control
+        // # = shift
+        // & = alt
+        // Reset Position
+        // =============================================== Reset Position
+        [MenuItem("Custom Commands/Reset Local Posi #s")]
+        static void ResetLocalPosi()
         {
             if (Selection.activeTransform != null && _cmdsActive)
             {
@@ -159,12 +169,14 @@ namespace StardropTools.CustomCommands
 
                 foreach (GameObject go in objs)
                 {
+                    // reset RectsTransform
                     if (go.GetComponent<RectTransform>() == true)
                     {
                         Undo.RecordObject(go.transform, "Reset object position");
                         go.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                     }
 
+                    // reset Transform
                     else
                     {
                         Undo.RecordObject(go.transform, "Reset object position");
@@ -174,9 +186,13 @@ namespace StardropTools.CustomCommands
             }
         }
 
-        // Reset Transform
-        // =============================================== Reset Transform
-        [MenuItem("Custom Commands/Reset Rotation &r")]
+
+        // % = control
+        // # = shift
+        // & = alt
+        // Reset Rotation
+        // =============================================== Reset Rotation
+        [MenuItem("Custom Commands/Reset Rotation #r")]
         static void ResetRotation()
         {
             if (Selection.activeTransform != null && _cmdsActive)
@@ -186,15 +202,17 @@ namespace StardropTools.CustomCommands
 
                 foreach (GameObject go in objs)
                 {
+                    // reset RectsTransform
                     if (go.GetComponent<RectTransform>() == true)
                     {
-                        Undo.RecordObject(go.transform, "Reset object local position");
+                        Undo.RecordObject(go.transform, "Reset object Rotation");
                         go.GetComponent<RectTransform>().rotation = Quaternion.identity;
                     }
 
+                    // reset Transform
                     else
                     {
-                        Undo.RecordObject(go.transform, "Reset object local position");
+                        Undo.RecordObject(go.transform, "Reset object Rotation");
                         go.transform.rotation = Quaternion.identity;
                     }
                 }
@@ -202,9 +220,12 @@ namespace StardropTools.CustomCommands
         }
 
 
+        // % = control
+        // # = shift
+        // & = alt
         // Reset Scale
         // =============================================== Reset Scale
-        [MenuItem("Custom Commands/Reset Scale &s")]
+        [MenuItem("Custom Commands/Reset Scale &r")]
         static void ResetScale()
         {
             if (Selection.activeTransform != null && _cmdsActive)
@@ -216,13 +237,13 @@ namespace StardropTools.CustomCommands
                 {
                     if (go.GetComponent<RectTransform>() == true)
                     {
-                        Undo.RecordObject(go.transform, "Reset object local position");
+                        Undo.RecordObject(go.transform, "Reset object local scale");
                         go.GetComponent<RectTransform>().localScale = Vector3.one;
                     }
 
                     else
                     {
-                        Undo.RecordObject(go.transform, "Reset object local position");
+                        Undo.RecordObject(go.transform, "Reset object local scale");
                         go.transform.localScale = Vector3.one;
                     }
                 }
@@ -254,6 +275,9 @@ namespace StardropTools.CustomCommands
                         _objectCount++;
                     }
                 }
+
+                if (_objectCount == 0)
+                    return;
 
                 // Get Active Percent
                 float _enablePercent = _enabled * 100 / _objectCount;
@@ -302,7 +326,7 @@ namespace StardropTools.CustomCommands
 
         // Enable & Disable Colliders
         // =============================================== Enable & Disable Colliders
-        [MenuItem("Custom Commands/Enable or Disable Colliders _c")] // c
+        [MenuItem("Custom Commands/Enable or Disable Colliders #c")] // c
         static void EnableColliders()
         {
             if (Selection.activeTransform != null && _cmdsActive)
@@ -324,6 +348,9 @@ namespace StardropTools.CustomCommands
                         _objectCount++;
                     }
                 }
+
+                if (_objectCount == 0)
+                    return;
 
                 // Get Active Percent
                 float _enablePercent = _enabled * 100 / _objectCount;
@@ -368,7 +395,7 @@ namespace StardropTools.CustomCommands
         }
 
 
-        
+
         // Set Selected Image Opacity all different
         // =============================================== Image Opacity Chain
         [MenuItem("Custom Commands/Image Opacity Chain #i")] // shift + i
@@ -408,7 +435,7 @@ namespace StardropTools.CustomCommands
                         a -= d;
 
                         img.color = color;
-                        
+
                         img.gameObject.SetActive(false);
                         img.gameObject.SetActive(true);
                         counter++;
@@ -416,51 +443,59 @@ namespace StardropTools.CustomCommands
                 }
 
                 Debug.Log("<color=cyan> Opacity Chain Complete </color>");
+            }
+        }
 
-                #region Enable & Disable
-                /*
-                // Get Active Percent
-                float _enablePercent = _enabled * 100 / _objectCount;
 
-                // Disable
-                if (_enablePercent >= 50)
+        // Inverse XYZ Positions of selected objects
+        // =============================================== Inverse Axis
+        [MenuItem("Custom Commands/Inverse X Axis #x")] // shift + x
+        static void InverseX()
+        {
+            if (Selection.activeTransform != null && _cmdsActive)
+            {
+                GameObject[] objs;
+                objs = Selection.gameObjects;
+
+                foreach (GameObject go in objs)
                 {
-                    foreach (GameObject go in objs)
-                    {
-                        if (go.GetComponent<UnityEngine.UI.Image>() == true)
-                        {
-                            UnityEngine.UI.Image image = go.GetComponent<UnityEngine.UI.Image>();
-
-                            if (image.enabled == true)
-                            {
-                                Undo.RecordObject(image, "Disabled Collider");
-                                image.enabled = false;
-                            }
-                        }
-                    }
+                    Undo.RecordObject(go.transform, "Inverse Axis");
+                    go.transform.position = UtilsVector.InverseVector3Axis(go.transform.position, 0);
                 }
+            }
+        }
 
-                    // Enable
-                else
+
+        [MenuItem("Custom Commands/Inverse Y Axis #y")] // shift + y
+        static void InverseY()
+        {
+            if (Selection.activeTransform != null && _cmdsActive)
+            {
+                GameObject[] objs;
+                objs = Selection.gameObjects;
+
+                foreach (GameObject go in objs)
                 {
-                    
-
-                    foreach (GameObject go in objs)
-                    {
-                        if (go.GetComponent<UnityEngine.UI.Image>() == true)
-                        {
-                            UnityEngine.UI.Image image = go.GetComponent<UnityEngine.UI.Image>();
-
-                            if (image.enabled == true)
-                            {
-                                Undo.RecordObject(image, "Enabled Collider");
-                                image.enabled = true;
-                            }
-                        }
-                    }
+                    Undo.RecordObject(go.transform, "Inverse Axis");
+                    go.transform.position = UtilsVector.InverseVector3Axis(go.transform.position, 1);
                 }
-                */
-                #endregion // enable & disable
+            }
+        }
+
+
+        [MenuItem("Custom Commands/Inverse Z Axis #z")] // shift + z
+        static void InverseZ()
+        {
+            if (Selection.activeTransform != null && _cmdsActive)
+            {
+                GameObject[] objs;
+                objs = Selection.gameObjects;
+
+                foreach (GameObject go in objs)
+                {
+                    Undo.RecordObject(go.transform, "Inverse Axis");
+                    go.transform.position = UtilsVector.InverseVector3Axis(go.transform.position, 2);
+                }
             }
         }
     }
@@ -468,7 +503,7 @@ namespace StardropTools.CustomCommands
     // taken from https://forum.unity.com/threads/shortcut-key-for-lock-inspector.95815/
     public class InspectorLockToggle
     {
-        [MenuItem("Custom Commands/Toggle Lock #w")] // shift + w
+        [MenuItem("Custom Commands/Toggle Inspector Lock #w")] // shift + w
         static void ToggleInspectorLock() // Inspector must be inspecting something to be locked
         {
             EditorWindow inspectorToBeLocked = EditorWindow.mouseOverWindow; // "EditorWindow.focusedWindow" can be used instead
@@ -481,7 +516,24 @@ namespace StardropTools.CustomCommands
                 propertyInfo.SetValue(inspectorToBeLocked, !value, null);
                 inspectorToBeLocked.Repaint();
 
-                Debug.LogFormat("<Color=white>Inspector Locked:</color> <color=cyan>{0}</color>", !value );
+                Debug.LogFormat("<Color=white>Inspector Locked:</color> <color=cyan>{0}</color>", !value);
+            }
+        }
+
+        [MenuItem("Custom Commands/Toggle Inspector Lock #%d")] // shift + ctlr + d
+        static void ToggleDebugMode()
+        {
+            EditorWindow inspectorToBeDebugged = EditorWindow.mouseOverWindow; // "EditorWindow.focusedWindow" can be used instead
+
+            if (inspectorToBeDebugged != null && inspectorToBeDebugged.GetType().Name == "InspectorWindow")
+            {
+                Type type = Assembly.GetAssembly(typeof(Editor)).GetType("UnityEditor.InspectorWindow");
+                PropertyInfo propertyInfo = type.GetProperty("isDebug");
+                bool value = (bool)propertyInfo.GetValue(inspectorToBeDebugged, null);
+                propertyInfo.SetValue(inspectorToBeDebugged, !value, null);
+                inspectorToBeDebugged.Repaint();
+
+                Debug.LogFormat("<Color=white>Inspector Debug Mode:</color> <color=magenta>{0}</color>", !value);
             }
         }
     }
