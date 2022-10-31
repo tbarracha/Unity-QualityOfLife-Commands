@@ -2,7 +2,5 @@
 Quality of life custom commands for Unity scene object manipulation
 
 ## Current functionality
-- Reset transform local and global position
-- Enable / disable GameObject active state
-- Enable / disable Colliders
-- Enable / disable MeshRenderer
+
+![Screenshot (5)](https://user-images.githubusercontent.com/21272904/199037176-92722e4a-9bbf-4b5e-96c9-2adb4251155b.png)
