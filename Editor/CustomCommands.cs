@@ -126,7 +126,7 @@ namespace StardropTools.CustomCommands
         // & = alt
         // Reset Position
         // =============================================== Reset Position
-        [MenuItem("Custom Commands/Reset Pos &s")]
+        [MenuItem("Custom Commands/Reset World Position &s")]
         static void ResetPos()
         {
             if (Selection.activeTransform != null && _cmdsActive)
@@ -159,7 +159,7 @@ namespace StardropTools.CustomCommands
         // & = alt
         // Reset Position
         // =============================================== Reset Position
-        [MenuItem("Custom Commands/Reset Local Posi #s")]
+        [MenuItem("Custom Commands/Reset Local Position #s")]
         static void ResetLocalPosi()
         {
             if (Selection.activeTransform != null && _cmdsActive)
@@ -192,7 +192,7 @@ namespace StardropTools.CustomCommands
         // & = alt
         // Reset Rotation
         // =============================================== Reset Rotation
-        [MenuItem("Custom Commands/Reset Rotation #r")]
+        [MenuItem("Custom Commands/Reset World Rotation #r")]
         static void ResetRotation()
         {
             if (Selection.activeTransform != null && _cmdsActive)
@@ -520,7 +520,7 @@ namespace StardropTools.CustomCommands
             }
         }
 
-        [MenuItem("Custom Commands/Toggle Inspector Lock #%d")] // shift + ctlr + d
+        [MenuItem("Custom Commands/Toggle Inspector Debug #%d")] // shift + ctlr + d
         static void ToggleDebugMode()
         {
             EditorWindow inspectorToBeDebugged = EditorWindow.mouseOverWindow; // "EditorWindow.focusedWindow" can be used instead
