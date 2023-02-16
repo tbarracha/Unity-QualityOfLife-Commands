@@ -498,6 +498,27 @@ namespace StardropTools.CustomCommands
                 }
             }
         }
+
+
+        [MenuItem("Custom Commands/Delete Object Children %#DEL")] // Ctrl + Shift + Del
+        static void DeleteChildrenOfSelecteddObject()
+        {
+            if (Selection.activeTransform != null && _cmdsActive)
+            {
+                GameObject[] objs;
+                objs = Selection.gameObjects;
+
+                foreach (GameObject go in objs)
+                {
+                    Undo.RecordObject(go.transform, "Delete Children");
+
+                    var children = Utilities.GetChildren(go.transform);
+
+                    foreach (Transform child in children)
+                        GameObject.DestroyImmediate(child.gameObject);
+                }
+            }
+        }
     }
 
     // taken from https://forum.unity.com/threads/shortcut-key-for-lock-inspector.95815/
@@ -528,7 +549,7 @@ namespace StardropTools.CustomCommands
             if (inspectorToBeDebugged != null && inspectorToBeDebugged.GetType().Name == "InspectorWindow")
             {
                 Type type = Assembly.GetAssembly(typeof(Editor)).GetType("UnityEditor.InspectorWindow");
-                PropertyInfo propertyInfo = type.GetProperty("isDebug");
+                PropertyInfo propertyInfo = type.GetProperty("isLocked");
                 bool value = (bool)propertyInfo.GetValue(inspectorToBeDebugged, null);
                 propertyInfo.SetValue(inspectorToBeDebugged, !value, null);
                 inspectorToBeDebugged.Repaint();
